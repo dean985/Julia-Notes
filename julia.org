@@ -1,0 +1,568 @@
+#+TITLE: My; Julia Notebook
+#+DATE: 09/01/2021
+#+AUTHOR: Dean Carmi
+
+* The REPL
+The *REPL* is a quick and dirty console for julia.
+It allows quick code execution and immidiate 
+
+In order to clear the history of the REPL use =C-l=
+
+* Data Variables
+Julia is composed from the following literal data types:
+- Int
+- Float
+- String
+- Char
+Which is similar to any other language.
+#+begin_src julia :results output 
+a = 2
+b = 3.0
+c = 'c'
+d = "Julia"
+println("Hello World!")
+return d
+#+end_src
+
+#+RESULTS:
+: 2
+: 3.0
+: 'c': ASCII/Unicode U+0063 (category Ll: Letter, lowercase)
+: "Julia"
+: Hello World!
+: "Julia"
+
+* Operations
+** Broadcasting assignment
+
+* Arrays
+** Definition and declarations
+A simple way to instatiate an array would be :
+#+begin_src julia
+arr = [1,2,3,4,5]
+str_arr = {"Hello", "Dean"}
+# There is also an array of functions
+func_arr = [sin, cos, tan]
+#+end_src
+You can specify the type and the dimensions of an array using =Array{type}(dims)=
+(notice that upper-case "A"), putting the type in curly braces, and the
+dimensions in the parentheses. The undef means that the array hasn't been
+initialized to known values. 
+
+
+** Multi dimensional arrays
+*** 2D arrays
+Lets see two ways to create an array of one dimension, and see the differences.
+#+begin_src julia :results output
+vector1 = [1 2 3 4 5]
+vector2 = [6,7,8,9,10]
+#+end_src
+
+#+RESULTS:
+: 1×5 Array{Int64,2}:
+:  1  2  3  4  5
+: 5-element Array{Int64,1}:
+:   6
+:   7
+:   8
+:   9
+:  10
+
+As you can see, =vector1= is actually a /row vector/. In other words, it's a matrix of
+$1\times 5$. In contrast, =vector2= is a column vector (just an array) with 5 elements.
+
+From here we will show how to define a matrix with Julia.
+#+begin_src julia :results output
+my_matrix = [1 2 3 ; 4 5 6 ; 7 8 9]
+#+end_src
+
+#+RESULTS:
+: 3×3 Array{Int64,2}:
+:  1  2  3
+:  4  5  6
+:  7  8  9
+*Comment* - It important to notice the differences.
+- If in the brackets our elements are separated by /commas/, then it is a vector (or a regular array)
+- If in the brackets our elements are separated by /semicolons/, then its is a row vector.
+
+*Another comment*
+Using the function =rand(k)= from the Core library, it will create for us a vector of =k= elements.
+But, if we will use it like =rand(5,1)= 
+#+begin_src julia :results output
+arr1 = rand(5)
+arr2 = rand(5,1)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+5-element Array{Float64,1}:
+ 0.38185085082630654
+ 0.12976632383271025
+ 0.020267318339624474
+ 0.12028557653544847
+ 0.8857876354686331
+5×1 Array{Float64,2}:
+ 0.3540941978376697
+ 0.4393183255975357
+ 0.1880138149842332
+ 0.5941330963847264
+ 0.7016490528251751
+#+end_example
+
+*** Useful Alises
+In order to help us not confuse between those two types, Julia also features the following aliases:
+- Vector :: An alias for a standard array.
+- Matrix :: An alias for a Array with two dimensions.
+#+begin_src julia :results output
+Vector(undef, 5)
+Matrix(undef, 3,3)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+5-element Array{Any,1}:
+ #undef
+ #undef
+ #undef
+ #undef
+ #undef
+3×3 Array{Any,2}:
+ #undef  #undef  #undef
+ #undef  #undef  #undef
+ #undef  #undef  #undef
+#+end_example
+
+*** Range
+In Julia, we use a colon =:= for different purposes. One use is the define a sequence of numbers.
+#+begin_src julia :results output
+for n in 1:5 print(n,",") end
+#+end_src
+
+#+RESULTS:
+: 1,2,3,4,5,
+
+You can also build a vector using range.
+#+begin_src julia :results output
+
+collect(1:5)
+#+end_src
+
+#+RESULTS:
+: 5-element Array{Int64,1}:
+:  1
+:  2
+:  3
+:  4
+:  5
+
+The =collect(a:b)= function will return a vector consisting of elements between $a$ and $b$
+with a difference of 1. The function =collect(a:b:c)= will return a vector of elements between
+$a$ and $c$ with a difference of $b$ between them.
+#+begin_src julia :results output
+collect(1:2:10)
+#+end_src
+
+#+RESULTS:
+: 5-element Array{Int64,1}:
+:  1
+:  3
+:  5
+:  7
+:  9
+** Filling an array
+*** Comprehensions and Generators
+A useful way to create arrays where each element can be produced using
+a small computation is to use comprehensions.
+#+begin_src julia :results output
+[n^2 for n in 1:5]
+#+end_src
+
+#+RESULTS:
+: 5-element Array{Int64,1}:
+:   1
+:   4
+:   9
+:  16
+:  25
+If you would use two iterator, you cancreat a matrix (or a 2D array).
+#+begin_src julia :results output
+[r*c for r in 1:3, c in 1:3]
+#+end_src
+
+#+RESULTS:
+: 3×3 Array{Int64,2}:
+:  1  2  3
+:  2  4  6
+:  3  6  9
+
+You can also add a condition to the for loop like so:
+#+begin_src julia :results output
+[i^2 for i in 1:5 if i!=3]
+#+end_src
+
+#+RESULTS:
+: 4-element Array{Int64,1}:
+:   1
+:   4
+:  16
+:  25
+*** With zeros or ones
+In order to fill an array with zeros use the function =zeros(m,n)=
+#+begin_src julia :results output
+zeros(2,3)
+zeros(3)
+zeros(Int64, 2,2)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+2×3 Array{Float64,2}:
+ 0.0  0.0  0.0
+ 0.0  0.0  0.0
+3-element Array{Float64,1}:
+ 0.0
+ 0.0
+ 0.0
+2×2 Array{Int64,2}:
+ 0  0
+ 0  0
+#+end_example
+
+The same thing goes for ones and random values.
+=rand(range, m, n)= creates a matrix full of numbers in the supplied range:
+#+begin_src julia :results output
+ones(Int64, 3,3)
+rand(1:6, 3,3)
+#+end_src
+
+#+RESULTS:
+: 3×3 Array{Int64,2}:
+:  1  1  1
+:  1  1  1
+:  1  1  1
+: 3×3 Array{Int64,2}:
+:  1  5  2
+:  3  2  1
+:  3  3  5
+
+** Arrays of arrays
+It's easy to create an array of arrays. Sometimes you want to specify the original contents: 
+#+begin_src julia :results output
+arr_of_arr = Array[[1,2], [3,4]]
+#+end_src
+
+#+RESULTS:
+: 2-element Array{Array,1}:
+:  [1, 2]
+:  [3, 4]
+** Reshape and Range
+Another useful function is =range()=, which constructs a range object that goes from a
+start value to an end value taking a specific number of steps of a certain size.
+You don't have to calculate all the information, because Julia calculates the missing
+pieces for you by combining the values for the keywords =step()=, =length(=), and =stop()=.
+For example, to go from 1 to 100 in exactly 12 steps:
+#+begin_src julia :results output
+my_range = range(1, stop = 100, length=12)
+# And now construct a vector from that range
+collect(my_range)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+1.0:9.0:100.0
+12-element Array{Float64,1}:
+   1.0
+  10.0
+  19.0
+  28.0
+  37.0
+  46.0
+  55.0
+  64.0
+  73.0
+  82.0
+  91.0
+ 100.0
+#+end_example
+
+You can use the =range()= function to create vector-like arrays,
+followed by =reshape()= to change them into 2D arrays:
+#+begin_src julia :results output
+a = reshape(range(0, stop=100, length=30), 10, 3)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+10×3 reshape(::StepRangeLen{Float64,Base.TwicePrecision{Float64},Base.TwicePrecision{Float64}}, 10, 3) with eltype Float64:
+  0.0      34.4828   68.9655
+  3.44828  37.931    72.4138
+  6.89655  41.3793   75.8621
+ 10.3448   44.8276   79.3103
+ 13.7931   48.2759   82.7586
+ 17.2414   51.7241   86.2069
+ 20.6897   55.1724   89.6552
+ 24.1379   58.6207   93.1034
+ 27.5862   62.069    96.5517
+ 31.0345   65.5172  100.0
+#+end_example
+
+With the =reshape()= function, you could of course just create a simple array and then change its shape:
+#+begin_src julia :results output
+reshape(1:8, 2,4)
+reshape(10:21, 4,3)
+#+end_src
+
+#+RESULTS:
+: 2×4 reshape(::UnitRange{Int64}, 2, 4) with eltype Int64:
+:  1  3  5  7
+:  2  4  6  8
+: 4×3 reshape(::UnitRange{Int64}, 4, 3) with eltype Int64:
+:  10  14  18
+:  11  15  19
+:  12  16  20
+:  13  17  21
+*** Modifying an Array
+To add an item to an array we use =push!=
+#+begin_src julia :results output
+a = collect(1:10)
+push!(a,20)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+10-element Array{Int64,1}:
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+11-element Array{Int64,1}:
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 20
+#+end_example
+
+In order to add elements in specific indices, we use =splice!(array, /range/, /range to replace/)=.
+The function returns an array of the elements being replaced.
+#+begin_src julia :results output
+a = collect(1:10)
+splice!(a, 1:2, 12:13)
+a
+#+end_src
+
+#+RESULTS:
+#+begin_example
+10-element Array{Int64,1}:
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+2-element Array{Int64,1}:
+ 1
+ 2
+10-element Array{Int64,1}:
+ 12
+ 13
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+#+end_example
+If the amount of elements that we want to add is larger the amount of element to be replaced, it will still work.
+The array grows larger to accommodate the new elements, and elements after the inserted sequence are pushed down.
+
+If you don't supply a replacement, you can also use =splice!()= can remove elements and move the rest of them along.
+
+**** Setting the content of arrays
+To set the contents of an array, specify the indices on the left-hand side of an assignment expression: 
+#+begin_src julia :results output
+a = collect(1:5)
+a[1] = -10
+a
+#+end_src
+
+#+RESULTS:
+#+begin_example
+5-element Array{Int64,1}:
+ 1
+ 2
+ 3
+ 4
+ 5
+-10
+5-element Array{Int64,1}:
+ -10
+   2
+   3
+   4
+   5
+#+end_example
+
+*** Other methods
+Arrays in julia have more methods that might be useful:
+1. =ndims= - returns the number of dimensions.
+2. =size()= - returns a tuple of and rows and columns.
+3. =length()= - returns the amount of elements.
+4. =count(condition, array)= - returns a integers counting the ones that conform to the condition.
+5. =union(arr1,arr2,...arrN)= - returns an array uniting the array.
+6. =intersect(arr1,arr2,...arrN)= - returns an array containing the mutual elements.
+7. =filter(function, array)= - returns the array that contains the elements that comply to the function.
+
+Methods like =filter()= and =intersect()= do NOT change the array, but returning a copy of it.
+In order to change the array, we add =!= to the function name, like =filter!(function, array)=.
+* Tuples
+A /tuple/ is an ordered sequence of elements, like an array. A tuple is represented by
+parentheses and commas, rather than the square brackets used by arrays. Tuples
+are mostly good for small fixed-length collections. The important difference between arrays
+and tuples is that tuples are *immutable*.
+#+begin_src julia :results output
+t = (1,2,3,4,5,6,7,8,9,10)
+t[6:end]
+#+end_src
+
+#+RESULTS:
+: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+: (6, 7, 8, 9, 10)
+** Named tuples
+A named tuple is like a combination of a tuple and a dictionary. Like a tuple, a named tuple is
+ordered and immutable, and enclosed in parentheses; like a dictionary, each element has a
+unique key that can be used to access it.
+
+#+begin_src julia :results output
+shape1 = (corner1 = (1, 1), corner2 = (-1, -1), center = (0, 0))
+shape1.corner1
+#+end_src
+
+#+RESULTS:
+: (corner1 = (1, 1), corner2 = (-1, -1), center = (0, 0))
+: (1, 1)
+#+begin_src julia :results output
+shape1 = (corner1 = (1, 1), corner2 = (-1, -1), center = (0, 0))
+point1, point2, point3 = shape1
+
+point1
+#+end_src
+
+#+RESULTS:
+: (corner1 = (1, 1), corner2 = (-1, -1), center = (0, 0))
+: (corner1 = (1, 1), corner2 = (-1, -1), center = (0, 0))
+: (1, 1)
+
+* Structs
+** Immutable
+#+begin_src julia :results output
+println(1+2)
+#+end_src
+
+#+RESULTS:
+: 3
+
+** Mutable
+* Functions
+There are various syntaxes for defining functions:
+- When the function contains a single expression
+  #+begin_src julia :results output
+g(x,y) = sqrt(x^2 + y^2)
+g(3,4)
+  #+end_src
+
+  #+RESULTS:
+  : g (generic function with 1 method)
+  : 5.0
+
+- When the function contains multiple expressions
+  #+begin_src julia :result output
+function functionname(args)
+    print("Function format")
+end
+  #+end_src
+
+  #+RESULTS:
+
+  + Functions with variable number of arguments
+ #+begin_src julia :results output
+function fvar(args...)
+    println("you supplied $(length(args)) arguments")
+    for arg in args
+       println(" argument ", arg)
+    end
+end
+fvar(1,2,3,4)
+ #+end_src 
+
+ #+RESULTS:
+ : fvar (generic function with 1 method)
+ : you supplied 4 arguments
+ :  argument 1
+ :  argument 2
+ :  argument 3
+ :  argument 4
+
+
+- When the function doesn't need a name
+  Sometimes you don't want to worry about thinking up a cool name for a function.
+  Anonymous functions — functions with no name — can be used.
+  #+begin_src julia :results output
+# x -> x^2 +2x -1
+map(x -> x^2 +2x -1, 1:3)
+  #+end_src
+
+  #+RESULTS:
+  : 3-element Array{Int64,1}:
+  :   2
+  :   7
+  :  14
+  
+
+* Use of $\LaTeX$ in Julia
+* Documentation
+* Modules
+To load a module, two main keywords can be used: using and import.
+To understand their differences, consider the following example:
+#+begin_src julia :results output
+module MyModule
+
+export x, y
+
+x() = "x"
+y() = "y"
+z() = "z"
+
+end
+#+end_src
+In this module we export the =x= and =y= functions (with the keyword =export=), and also have the non-exported function =p=. There are several different ways to load the Module and its inner functions into the current workspace:
+| Import command               | What is brought into scope                           | 
+|------------------------------+------------------------------------------------------|
+| =using MyModule=               | All =export= -ed names. You call them using =MyModule.x= |
+| =using MyModule:x,z=           | Imports only =x= and =z=.                                |
+| =import MyModule=              | =MyModule.x=, =MyModule.y=, =MyModule.z=                   |
+| =import MyModule.x,MyModule.z= | =x=, =z=                                                 |
+| =import MyModule:x,z=          | =x=, =z=                                                 |
+| =include("file1.jl")=          | Import a file.                                       |
+
+* Packages
+* CSV handling
+* Plotting
