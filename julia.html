@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-01-15 Fri 00:40 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My; Julia Notebook</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Dean Carmi" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">My; Julia Notebook</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9f9c0d4">1. The REPL</a></li>
+<li><a href="#orgd6fcd32">2. Data Variables</a></li>
+<li><a href="#orgcefc4a4">3. Operations</a>
+<ul>
+<li><a href="#org2745774">3.1. Broadcasting assignment</a></li>
+</ul>
+</li>
+<li><a href="#org0a88fa3">4. Arrays</a>
+<ul>
+<li><a href="#org06e0fca">4.1. Definition and declarations</a></li>
+<li><a href="#org30b88e5">4.2. Multi dimensional arrays</a>
+<ul>
+<li><a href="#orgad5e0e8">4.2.1. 2D arrays</a></li>
+<li><a href="#orga7eda25">4.2.2. Useful Alises</a></li>
+<li><a href="#orge2ef96a">4.2.3. Range</a></li>
+</ul>
+</li>
+<li><a href="#org23f3584">4.3. Filling an array</a>
+<ul>
+<li><a href="#org5162f3b">4.3.1. Comprehensions and Generators</a></li>
+<li><a href="#org9ae5036">4.3.2. With zeros or ones</a></li>
+</ul>
+</li>
+<li><a href="#org46a7c9a">4.4. Arrays of arrays</a></li>
+<li><a href="#org1a34f1c">4.5. Reshape and Range</a>
+<ul>
+<li><a href="#org639640a">4.5.1. Modifying an Array</a></li>
+<li><a href="#org235cae4">4.5.2. Other methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge24059e">5. Tuples</a>
+<ul>
+<li><a href="#org1e5f47f">5.1. Named tuples</a></li>
+</ul>
+</li>
+<li><a href="#orgaa5b2b0">6. Structs</a>
+<ul>
+<li><a href="#org190960b">6.1. Immutable</a></li>
+<li><a href="#org1dd7ecc">6.2. Mutable</a></li>
+</ul>
+</li>
+<li><a href="#orgddd47d7">7. Functions</a></li>
+<li><a href="#orgf83dc7c">8. Use of \(\LaTeX\) in Julia</a></li>
+<li><a href="#org62be1ee">9. Documentation</a></li>
+<li><a href="#org78ec29b">10. Modules</a></li>
+<li><a href="#org6e12996">11. Packages</a></li>
+<li><a href="#org8bc1e65">12. CSV handling</a></li>
+<li><a href="#orgec41606">13. Plotting</a>
+<ul>
+<li><a href="#org4065dab">13.1. A simple example</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org9f9c0d4" class="outline-2">
+<h2 id="org9f9c0d4"><span class="section-number-2">1</span> The REPL</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The <b>REPL</b> is a quick and dirty console for julia.
+It allows quick code execution and immidiate 
+</p>
+
+<p>
+In order to clear the history of the REPL use <code>C-l</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd6fcd32" class="outline-2">
+<h2 id="orgd6fcd32"><span class="section-number-2">2</span> Data Variables</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Julia is composed from the following literal data types:
+</p>
+<ul class="org-ul">
+<li>Int</li>
+<li>Float</li>
+<li>String</li>
+<li>Char</li>
+</ul>
+<p>
+Which is similar to any other language.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">a = <span style="color: #da8548; font-weight: bold;">2</span>
+b = <span style="color: #da8548; font-weight: bold;">3.0</span>
+c = <span style="color: #98be65;">'c'</span>
+d = <span style="color: #98be65;">"Julia"</span>
+println(<span style="color: #98be65;">"Hello World!"</span>)
+<span style="color: #51afef;">return</span> d
+</pre>
+</div>
+
+<pre class="example">
+2
+3.0
+'c': ASCII/Unicode U+0063 (category Ll: Letter, lowercase)
+"Julia"
+Hello World!
+"Julia"
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgcefc4a4" class="outline-2">
+<h2 id="orgcefc4a4"><span class="section-number-2">3</span> Operations</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org2745774" class="outline-3">
+<h3 id="org2745774"><span class="section-number-3">3.1</span> Broadcasting assignment</h3>
+</div>
+</div>
+
+<div id="outline-container-org0a88fa3" class="outline-2">
+<h2 id="org0a88fa3"><span class="section-number-2">4</span> Arrays</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org06e0fca" class="outline-3">
+<h3 id="org06e0fca"><span class="section-number-3">4.1</span> Definition and declarations</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+A simple way to instatiate an array would be :
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">arr = [<span style="color: #da8548; font-weight: bold;">1</span>,<span style="color: #da8548; font-weight: bold;">2</span>,<span style="color: #da8548; font-weight: bold;">3</span>,<span style="color: #da8548; font-weight: bold;">4</span>,<span style="color: #da8548; font-weight: bold;">5</span>]
+str_arr = {<span style="color: #98be65;">"Hello"</span>, <span style="color: #98be65;">"Dean"</span>}
+<span style="color: #5B6268;"># </span><span style="color: #5B6268;">There is also an array of functions</span>
+func_arr = [sin, cos, tan]
+</pre>
+</div>
+<p>
+You can specify the type and the dimensions of an array using <code>Array{type}(dims)</code>
+(notice that upper-case &ldquo;A&rdquo;), putting the type in curly braces, and the
+dimensions in the parentheses. The undef means that the array hasn&rsquo;t been
+initialized to known values. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org30b88e5" class="outline-3">
+<h3 id="org30b88e5"><span class="section-number-3">4.2</span> Multi dimensional arrays</h3>
+<div class="outline-text-3" id="text-4-2">
+</div>
+<div id="outline-container-orgad5e0e8" class="outline-4">
+<h4 id="orgad5e0e8"><span class="section-number-4">4.2.1</span> 2D arrays</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+Lets see two ways to create an array of one dimension, and see the differences.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">vector1 = [<span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span>]
+vector2 = [<span style="color: #da8548; font-weight: bold;">6</span>,<span style="color: #da8548; font-weight: bold;">7</span>,<span style="color: #da8548; font-weight: bold;">8</span>,<span style="color: #da8548; font-weight: bold;">9</span>,<span style="color: #da8548; font-weight: bold;">10</span>]
+</pre>
+</div>
+
+<pre class="example">
+1×5 Array{Int64,2}:
+ 1  2  3  4  5
+5-element Array{Int64,1}:
+  6
+  7
+  8
+  9
+ 10
+</pre>
+
+
+<p>
+As you can see, <code>vector1</code> is actually a <i>row vector</i>. In other words, it&rsquo;s a matrix of
+\(1\times 5\). In contrast, <code>vector2</code> is a column vector (just an array) with 5 elements.
+</p>
+
+<p>
+From here we will show how to define a matrix with Julia.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">my_matrix = [<span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #da8548; font-weight: bold;">3</span> ; <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #da8548; font-weight: bold;">5</span> <span style="color: #da8548; font-weight: bold;">6</span> ; <span style="color: #da8548; font-weight: bold;">7</span> <span style="color: #da8548; font-weight: bold;">8</span> <span style="color: #da8548; font-weight: bold;">9</span>]
+</pre>
+</div>
+<p>
+<b>Comment</b> - It important to notice the differences.
+</p>
+<ul class="org-ul">
+<li>If in the brackets our elements are separated by <i>commas</i>, then it is a vector (or a regular array)</li>
+<li>If in the brackets our elements are separated by <i>semicolons</i>, then its is a row vector.</li>
+</ul>
+
+<p>
+<b>Another comment</b>
+Using the function <code>rand(k)</code> from the Core library, it will create for us a vector of <code>k</code> elements.
+But, if we will use it like <code>rand(5,1)</code> 
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">arr1 = rand(<span style="color: #da8548; font-weight: bold;">5</span>)
+arr2 = rand(<span style="color: #da8548; font-weight: bold;">5</span>,<span style="color: #da8548; font-weight: bold;">1</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga7eda25" class="outline-4">
+<h4 id="orga7eda25"><span class="section-number-4">4.2.2</span> Useful Alises</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+In order to help us not confuse between those two types, Julia also features the following aliases:
+</p>
+<dl class="org-dl">
+<dt>Vector</dt><dd>An alias for a standard array.</dd>
+<dt>Matrix</dt><dd>An alias for a Array with two dimensions.</dd>
+</dl>
+<div class="org-src-container">
+<pre class="src src-julia">Vector(<span style="color: #a9a1e1;">undef</span>, <span style="color: #da8548; font-weight: bold;">5</span>)
+Matrix(<span style="color: #a9a1e1;">undef</span>, <span style="color: #da8548; font-weight: bold;">3</span>,<span style="color: #da8548; font-weight: bold;">3</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge2ef96a" class="outline-4">
+<h4 id="orge2ef96a"><span class="section-number-4">4.2.3</span> Range</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+In Julia, we use a colon <code>:</code> for different purposes. One use is the define a sequence of numbers.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia"><span style="color: #51afef;">for</span> n <span style="color: #51afef;">in</span> <span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">5</span> print(n,<span style="color: #98be65;">","</span>) <span style="color: #51afef;">end</span>
+</pre>
+</div>
+
+<p>
+You can also build a vector using range.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">
+collect(<span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">5</span>)
+</pre>
+</div>
+
+<p>
+The <code>collect(a:b)</code> function will return a vector consisting of elements between \(a\) and \(b\)
+with a difference of 1. The function <code>collect(a:b:c)</code> will return a vector of elements between
+\(a\) and \(c\) with a difference of \(b\) between them.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">collect(<span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">2</span>:<span style="color: #da8548; font-weight: bold;">10</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org23f3584" class="outline-3">
+<h3 id="org23f3584"><span class="section-number-3">4.3</span> Filling an array</h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<div id="outline-container-org5162f3b" class="outline-4">
+<h4 id="org5162f3b"><span class="section-number-4">4.3.1</span> Comprehensions and Generators</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<p>
+A useful way to create arrays where each element can be produced using
+a small computation is to use comprehensions.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">[n<span style="color: #ECBE7B;">^</span><span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #51afef;">for</span> n <span style="color: #51afef;">in</span> <span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">5</span>]
+</pre>
+</div>
+<p>
+If you would use two iterator, you cancreat a matrix (or a 2D array).
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">[r<span style="color: #ECBE7B;">*</span>c <span style="color: #51afef;">for</span> r in <span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">3</span>, c <span style="color: #51afef;">in</span> <span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">3</span>]
+</pre>
+</div>
+
+<p>
+You can also add a condition to the for loop like so:
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">[i<span style="color: #ECBE7B;">^</span><span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #51afef;">for</span> i <span style="color: #51afef;">in</span> <span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">5</span> <span style="color: #51afef;">if</span> i!<span style="color: #51afef;">=</span><span style="color: #da8548; font-weight: bold;">3</span>]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9ae5036" class="outline-4">
+<h4 id="org9ae5036"><span class="section-number-4">4.3.2</span> With zeros or ones</h4>
+<div class="outline-text-4" id="text-4-3-2">
+<p>
+In order to fill an array with zeros use the function <code>zeros(m,n)</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">zeros(<span style="color: #da8548; font-weight: bold;">2</span>,<span style="color: #da8548; font-weight: bold;">3</span>)
+zeros(<span style="color: #da8548; font-weight: bold;">3</span>)
+zeros(Int64, <span style="color: #da8548; font-weight: bold;">2</span>,<span style="color: #da8548; font-weight: bold;">2</span>)
+</pre>
+</div>
+
+<p>
+The same thing goes for ones and random values.
+<code>rand(range, m, n)</code> creates a matrix full of numbers in the supplied range:
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">ones(Int64, <span style="color: #da8548; font-weight: bold;">3</span>,<span style="color: #da8548; font-weight: bold;">3</span>)
+rand(<span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">6</span>, <span style="color: #da8548; font-weight: bold;">3</span>,<span style="color: #da8548; font-weight: bold;">3</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org46a7c9a" class="outline-3">
+<h3 id="org46a7c9a"><span class="section-number-3">4.4</span> Arrays of arrays</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+It&rsquo;s easy to create an array of arrays. Sometimes you want to specify the original contents: 
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">arr_of_arr = Array[[<span style="color: #da8548; font-weight: bold;">1</span>,<span style="color: #da8548; font-weight: bold;">2</span>], [<span style="color: #da8548; font-weight: bold;">3</span>,<span style="color: #da8548; font-weight: bold;">4</span>]]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1a34f1c" class="outline-3">
+<h3 id="org1a34f1c"><span class="section-number-3">4.5</span> Reshape and Range</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+Another useful function is <code>range()</code>, which constructs a range object that goes from a
+start value to an end value taking a specific number of steps of a certain size.
+You don&rsquo;t have to calculate all the information, because Julia calculates the missing
+pieces for you by combining the values for the keywords <code>step()</code>, <code>length(</code>), and <code>stop()</code>.
+For example, to go from 1 to 100 in exactly 12 steps:
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">my_range = range(<span style="color: #da8548; font-weight: bold;">1</span>, stop = <span style="color: #da8548; font-weight: bold;">100</span>, length=<span style="color: #da8548; font-weight: bold;">12</span>)
+<span style="color: #5B6268;"># </span><span style="color: #5B6268;">And now construct a vector from that range</span>
+collect(my_range)
+</pre>
+</div>
+
+<p>
+You can use the <code>range()</code> function to create vector-like arrays,
+followed by <code>reshape()</code> to change them into 2D arrays:
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">a = reshape(range(<span style="color: #da8548; font-weight: bold;">0</span>, stop=<span style="color: #da8548; font-weight: bold;">100</span>, length=<span style="color: #da8548; font-weight: bold;">30</span>), <span style="color: #da8548; font-weight: bold;">10</span>, <span style="color: #da8548; font-weight: bold;">3</span>)
+</pre>
+</div>
+
+<p>
+With the <code>reshape()</code> function, you could of course just create a simple array and then change its shape:
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">reshape(<span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">8</span>, <span style="color: #da8548; font-weight: bold;">2</span>,<span style="color: #da8548; font-weight: bold;">4</span>)
+reshape(<span style="color: #da8548; font-weight: bold;">10</span>:<span style="color: #da8548; font-weight: bold;">21</span>, <span style="color: #da8548; font-weight: bold;">4</span>,<span style="color: #da8548; font-weight: bold;">3</span>)
+</pre>
+</div>
+</div>
+<div id="outline-container-org639640a" class="outline-4">
+<h4 id="org639640a"><span class="section-number-4">4.5.1</span> Modifying an Array</h4>
+<div class="outline-text-4" id="text-4-5-1">
+<p>
+To add an item to an array we use <code>push!</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">a = collect(<span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">10</span>)
+push!(a,<span style="color: #da8548; font-weight: bold;">20</span>)
+</pre>
+</div>
+
+<p>
+In order to add elements in specific indices, we use <code>splice!(array, /range/, /range to replace/)</code>.
+The function returns an array of the elements being replaced.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">a = collect(<span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">10</span>)
+splice!(a, <span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">2</span>, <span style="color: #da8548; font-weight: bold;">12</span>:<span style="color: #da8548; font-weight: bold;">13</span>)
+a
+</pre>
+</div>
+<p>
+If the amount of elements that we want to add is larger the amount of element to be replaced, it will still work.
+The array grows larger to accommodate the new elements, and elements after the inserted sequence are pushed down.
+</p>
+
+<p>
+If you don&rsquo;t supply a replacement, you can also use <code>splice!()</code> can remove elements and move the rest of them along.
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="org28b8e96"></a>Setting the content of arrays<br />
+<div class="outline-text-5" id="text-4-5-1-1">
+<p>
+To set the contents of an array, specify the indices on the left-hand side of an assignment expression: 
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">a = collect(<span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">5</span>)
+a[<span style="color: #da8548; font-weight: bold;">1</span>] = <span style="color: #ECBE7B;">-</span><span style="color: #da8548; font-weight: bold;">10</span>
+a
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org235cae4" class="outline-4">
+<h4 id="org235cae4"><span class="section-number-4">4.5.2</span> Other methods</h4>
+<div class="outline-text-4" id="text-4-5-2">
+<p>
+Arrays in julia have more methods that might be useful:
+</p>
+<ol class="org-ol">
+<li><code>ndims</code> - returns the number of dimensions.</li>
+<li><code>size()</code> - returns a tuple of and rows and columns.</li>
+<li><code>length()</code> - returns the amount of elements.</li>
+<li><code>count(condition, array)</code> - returns a integers counting the ones that conform to the condition.</li>
+<li><code>union(arr1,arr2,...arrN)</code> - returns an array uniting the array.</li>
+<li><code>intersect(arr1,arr2,...arrN)</code> - returns an array containing the mutual elements.</li>
+<li><code>filter(function, array)</code> - returns the array that contains the elements that comply to the function.</li>
+</ol>
+
+<p>
+Methods like <code>filter()</code> and <code>intersect()</code> do NOT change the array, but returning a copy of it.
+In order to change the array, we add <code>!</code> to the function name, like <code>filter!(function, array)</code>.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orge24059e" class="outline-2">
+<h2 id="orge24059e"><span class="section-number-2">5</span> Tuples</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+A <i>tuple</i> is an ordered sequence of elements, like an array. A tuple is represented by
+parentheses and commas, rather than the square brackets used by arrays. Tuples
+are mostly good for small fixed-length collections. The important difference between arrays
+and tuples is that tuples are <b>immutable</b>.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia">t = (<span style="color: #da8548; font-weight: bold;">1</span>,<span style="color: #da8548; font-weight: bold;">2</span>,<span style="color: #da8548; font-weight: bold;">3</span>,<span style="color: #da8548; font-weight: bold;">4</span>,<span style="color: #da8548; font-weight: bold;">5</span>,<span style="color: #da8548; font-weight: bold;">6</span>,<span style="color: #da8548; font-weight: bold;">7</span>,<span style="color: #da8548; font-weight: bold;">8</span>,<span style="color: #da8548; font-weight: bold;">9</span>,<span style="color: #da8548; font-weight: bold;">10</span>)
+t[<span style="color: #da8548; font-weight: bold;">6</span>:<span style="color: #51afef;">end</span>]
+</pre>
+</div>
+</div>
+<div id="outline-container-org1e5f47f" class="outline-3">
+<h3 id="org1e5f47f"><span class="section-number-3">5.1</span> Named tuples</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+A named tuple is like a combination of a tuple and a dictionary. Like a tuple, a named tuple is
+ordered and immutable, and enclosed in parentheses; like a dictionary, each element has a
+unique key that can be used to access it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-julia">shape1 = (corner1 = (<span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1</span>), corner2 = (<span style="color: #ECBE7B;">-</span><span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #ECBE7B;">-</span><span style="color: #da8548; font-weight: bold;">1</span>), center = (<span style="color: #da8548; font-weight: bold;">0</span>, <span style="color: #da8548; font-weight: bold;">0</span>))
+shape1.corner1
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-julia">shape1 = (corner1 = (<span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1</span>), corner2 = (<span style="color: #ECBE7B;">-</span><span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #ECBE7B;">-</span><span style="color: #da8548; font-weight: bold;">1</span>), center = (<span style="color: #da8548; font-weight: bold;">0</span>, <span style="color: #da8548; font-weight: bold;">0</span>))
+point1, point2, point3 = shape1
+
+point1
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaa5b2b0" class="outline-2">
+<h2 id="orgaa5b2b0"><span class="section-number-2">6</span> Structs</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org190960b" class="outline-3">
+<h3 id="org190960b"><span class="section-number-3">6.1</span> Immutable</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<pre class="src src-julia">println(<span style="color: #da8548; font-weight: bold;">1</span><span style="color: #ECBE7B;">+</span><span style="color: #da8548; font-weight: bold;">2</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1dd7ecc" class="outline-3">
+<h3 id="org1dd7ecc"><span class="section-number-3">6.2</span> Mutable</h3>
+</div>
+</div>
+<div id="outline-container-orgddd47d7" class="outline-2">
+<h2 id="orgddd47d7"><span class="section-number-2">7</span> Functions</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+There are various syntaxes for defining functions:
+</p>
+<ul class="org-ul">
+<li><p>
+When the function contains a single expression
+</p>
+<div class="org-src-container">
+<pre class="src src-julia"><span style="color: #c678dd;">g</span>(x,y) = sqrt(x<span style="color: #ECBE7B;">^</span><span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #ECBE7B;">+</span> y<span style="color: #ECBE7B;">^</span><span style="color: #da8548; font-weight: bold;">2</span>)
+g(<span style="color: #da8548; font-weight: bold;">3</span>,<span style="color: #da8548; font-weight: bold;">4</span>)
+</pre>
+</div></li>
+
+<li><p>
+When the function contains multiple expressions
+</p>
+<div class="org-src-container">
+<pre class="src src-julia"><span style="color: #51afef;">function</span> <span style="color: #c678dd;">functionname</span>(args)
+    print(<span style="color: #98be65;">"Function format"</span>)
+<span style="color: #51afef;">end</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Functions with variable number of arguments</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-julia"><span style="color: #51afef;">function</span> <span style="color: #c678dd;">fvar</span>(args...)
+    println(<span style="color: #98be65;">"you supplied $(length(args)) arguments"</span>)
+    <span style="color: #51afef;">for</span> arg <span style="color: #51afef;">in</span> args
+       println(<span style="color: #98be65;">" argument "</span>, arg)
+    <span style="color: #51afef;">end</span>
+<span style="color: #51afef;">end</span>
+fvar(<span style="color: #da8548; font-weight: bold;">1</span>,<span style="color: #da8548; font-weight: bold;">2</span>,<span style="color: #da8548; font-weight: bold;">3</span>,<span style="color: #da8548; font-weight: bold;">4</span>)
+</pre>
+</div></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+When the function doesn&rsquo;t need a name
+Sometimes you don&rsquo;t want to worry about thinking up a cool name for a function.
+Anonymous functions — functions with no name — can be used.
+</p>
+<div class="org-src-container">
+<pre class="src src-julia"><span style="color: #5B6268;"># </span><span style="color: #5B6268;">x -&gt; x^2 +2x -1</span>
+map(x <span style="color: #ECBE7B;">-&gt;</span> x<span style="color: #ECBE7B;">^</span><span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #ECBE7B;">+</span><span style="color: #da8548; font-weight: bold;">2</span>x <span style="color: #ECBE7B;">-</span><span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1</span>:<span style="color: #da8548; font-weight: bold;">3</span>)
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf83dc7c" class="outline-2">
+<h2 id="orgf83dc7c"><span class="section-number-2">8</span> Use of \(\LaTeX\) in Julia</h2>
+</div>
+<div id="outline-container-org62be1ee" class="outline-2">
+<h2 id="org62be1ee"><span class="section-number-2">9</span> Documentation</h2>
+</div>
+<div id="outline-container-org78ec29b" class="outline-2">
+<h2 id="org78ec29b"><span class="section-number-2">10</span> Modules</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+To load a module, two main keywords can be used: using and import.
+To understand their differences, consider the following example:
+</p>
+<div class="org-src-container">
+<pre class="src src-julia"><span style="color: #51afef;">module</span> MyModule
+
+<span style="color: #51afef;">export</span> x, y
+
+<span style="color: #c678dd;">x</span>() = <span style="color: #98be65;">"x"</span>
+<span style="color: #c678dd;">y</span>() = <span style="color: #98be65;">"y"</span>
+<span style="color: #c678dd;">z</span>() = <span style="color: #98be65;">"z"</span>
+
+<span style="color: #51afef;">end</span>
+</pre>
+</div>
+<p>
+In this module we export the <code>x</code> and <code>y</code> functions (with the keyword <code>export</code>), and also have the non-exported function <code>p</code>. There are several different ways to load the Module and its inner functions into the current workspace:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Import command</th>
+<th scope="col" class="org-left">What is brought into scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>using MyModule</code></td>
+<td class="org-left">All <code>export</code> -ed names. You call them using <code>MyModule.x</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>using MyModule:x,z</code></td>
+<td class="org-left">Imports only <code>x</code> and <code>z</code>.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>import MyModule</code></td>
+<td class="org-left"><code>MyModule.x</code>, <code>MyModule.y</code>, <code>MyModule.z</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>import MyModule.x,MyModule.z</code></td>
+<td class="org-left"><code>x</code>, <code>z</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>import MyModule:x,z</code></td>
+<td class="org-left"><code>x</code>, <code>z</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>include("file1.jl")</code></td>
+<td class="org-left">Import a file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org6e12996" class="outline-2">
+<h2 id="org6e12996"><span class="section-number-2">11</span> Packages</h2>
+</div>
+<div id="outline-container-org8bc1e65" class="outline-2">
+<h2 id="org8bc1e65"><span class="section-number-2">12</span> CSV handling</h2>
+</div>
+<div id="outline-container-orgec41606" class="outline-2">
+<h2 id="orgec41606"><span class="section-number-2">13</span> Plotting</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+Plotting is made using the <code>Plots.jl</code> package.
+</p>
+</div>
+<div id="outline-container-org4065dab" class="outline-3">
+<h3 id="org4065dab"><span class="section-number-3">13.1</span> A simple example</h3>
+<div class="outline-text-3" id="text-13-1">
+<p>
+The simplest use case would be to create a 2D plot as follows:
+</p>
+
+<div id="orgec487bc" class="figure">
+<p><img src="example.png" alt="example.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Simple Plot.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 09/01/2021</p>
+<p class="author">Author: Dean Carmi</p>
+<p class="date">Created: 2021-01-15 Fri 00:40</p>
+</div>
+</body>
+</html>

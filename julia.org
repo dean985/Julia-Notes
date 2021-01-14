@@ -1,6 +1,8 @@
-#+TITLE: My; Julia Notebook
+#+TITLE: My Julia Notebook
 #+DATE: 09/01/2021
 #+AUTHOR: Dean Carmi
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
 
 * The REPL
 The *REPL* is a quick and dirty console for julia.
@@ -15,7 +17,7 @@ Julia is composed from the following literal data types:
 - String
 - Char
 Which is similar to any other language.
-#+begin_src julia :results output 
+#+begin_src julia :results output :exports both
 a = 2
 b = 3.0
 c = 'c'
@@ -53,20 +55,10 @@ initialized to known values.
 ** Multi dimensional arrays
 *** 2D arrays
 Lets see two ways to create an array of one dimension, and see the differences.
-#+begin_src julia :results output
+#+begin_src julia :results output :exports both
 vector1 = [1 2 3 4 5]
 vector2 = [6,7,8,9,10]
 #+end_src
-
-#+RESULTS:
-: 1×5 Array{Int64,2}:
-:  1  2  3  4  5
-: 5-element Array{Int64,1}:
-:   6
-:   7
-:   8
-:   9
-:  10
 
 As you can see, =vector1= is actually a /row vector/. In other words, it's a matrix of
 $1\times 5$. In contrast, =vector2= is a column vector (just an array) with 5 elements.
@@ -536,7 +528,6 @@ map(x -> x^2 +2x -1, 1:3)
   :   7
   :  14
   
-
 * Use of $\LaTeX$ in Julia
 * Documentation
 * Modules
@@ -566,3 +557,22 @@ In this module we export the =x= and =y= functions (with the keyword =export=), 
 * Packages
 * CSV handling
 * Plotting
+Plotting is made using the =Plots.jl= package.
+** A simple example
+The simplest use case would be to create a 2D plot as follows:
+#+begin_src julia :results graphics :file example.png :exports results
+using Plots
+x = 1:10
+y = rand(10)
+print(typeof(y))
+plot(x,y)
+savefig("example.png")
+#+end_src
+
+#+RESULTS:
+
+
+#+caption: Simple Plot.
+#+attr_html: width 900px
+#+name: simplePlot
+[[file:example.png]]
