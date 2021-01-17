@@ -464,15 +464,55 @@ point1
 : (1, 1)
 
 * Structs
+Julia defines composite types just like =struct= in C. A composite type can hold
+multiple values. *It cannot hold functions*.
+
+A struct in Julia by default is /immutable/ and a it is considered a good practice
+to use the structs as immutable as possible.
+
+A struct has a constructor and it's values can be accessed through the =.= operator
+/just like C/.
+
+Keep in mind that the user is not required to define the type of the variables,
+but it has running time benefits so it is a good practice as well, if the variable
+is meant to be in a specific value.
+
 ** Immutable
+Creating a struct (or a composite type)
 #+begin_src julia :results output
-println(1+2)
+struct Coordinates
+    lat::Float64
+    lon::Float64
+end
+
+# Instantiating a struct
+NYC = Coordinates(40.730610, -73.935242)
+# Accessing values of the struct
+NYC.lat
 #+end_src
 
 #+RESULTS:
-: 3
+: Coordinates(40.73061, -73.935242)
+: 40.73061
 
 ** Mutable
+Structs can be immutable as well, if needed. It is defined in an almost identical manner.
+#+begin_src julia :results output
+mutable struct movie_ticket
+    price::Int64
+    movie_name::String
+end
+
+blockbuster = movie_ticket(30, "Terminator")
+blockbuster.price = 20
+blockbuster
+#+end_src
+
+#+RESULTS:
+: movie_ticket(30, "Terminator")
+: 20
+: movie_ticket(20, "Terminator")
+
 * Functions
 There are various syntaxes for defining functions:
 - When the function contains a single expression
@@ -576,3 +616,8 @@ savefig("example.png")
 #+attr_html: width 900px
 #+name: simplePlot
 [[file:example.png]]
+
+* Multiple dispach
+** What is it?
+** What are the benfits?
+** How to use it?
