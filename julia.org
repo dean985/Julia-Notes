@@ -600,7 +600,7 @@ In this module we export the =x= and =y= functions (with the keyword =export=), 
 Plotting is made using the =Plots.jl= package.
 ** A simple example
 The simplest use case would be to create a 2D plot as follows:
-#+begin_src julia :results graphics :file example.png :exports results
+#+begin_src julia :results graphics :file example.png :exports both
 using Plots
 x = 1:10
 y = rand(10)
@@ -616,6 +616,37 @@ savefig("example.png")
 #+attr_html: width 900px
 #+name: simplePlot
 [[file:example.png]]
+
+** Multiple lines
+Often we would need multiple lines in our plot. It is fairly straight forward.
+We are just adding another /collection/ to our =plot()= function.
+
+#+begin_src julia :results file :file poly_sqrt.png :exports both
+using Plots
+# Functions
+f(x) = x^2
+g(x) = sqrt(x)
+
+# range
+x0 = 0
+x1 = 5
+
+# values of the functions
+f_values = [f(i) for i in x0:x1]
+g_values = [g(i) for i in x0:x1]
+# the second argument in plot() function gives two set of values
+# they need to be in form of two columns
+y_values = [f_values, g_values]
+plot(x0:x1, y_values , title="Square root and square", 
+                        labels= ["x^2" "sqrt(x)"])
+savefig("poly_sqrt.png")
+#+end_src
+
+
+#+RESULTS
+[[file:poly_sqrt.png]]
+
+
 
 * Multiple dispach
 ** What is it?
